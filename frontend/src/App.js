@@ -1,0 +1,75 @@
+import { useState } from "react";
+import './App.css';
+
+function App() {
+	// longURL holds the input provided by the user
+	const [longURL, setLongURL]             = useState("");
+	// shortURL holds the value of the short URL returned by the server
+	const [shortURL, setShortURL]           = useState("");
+	// copiedText used to toggole the text value of copying button
+	const [copiedText, setCopiedText] 			= useState("");
+
+	const handleSubmit = (e) => {
+		e.preventDefault();
+
+		fetch("http://127.0.0.1:8000/shorten/", {
+			method:   "POST",
+			body:     JSON.stringify({ longURL: longURL }),
+			headers:  { "Content-Type": "application/json" },
+		})
+			.then((res)   => res.json())
+			.then((data)  => {
+				setShortURL(data.shortURL);
+				setLongURL("");
+			});
+	};
+
+	const handleCopy = () => {
+    navigator.clipboard.writeText(shortURL).then(() => {
+      setCopiedText(shortURL)
+    })
+  }
+
+	return (
+		<div className="content-wrapper">
+
+			<h1 className="page-title">URL Shortener</h1>
+
+			<p className="page-description">
+				Simple URL shortener application built with Django and React.
+			</p>
+
+			<div className="form-wrapper">
+
+				<div className="input-wrapper">
+					<input type="text" name="longURL" placeholder="https://..." onChange={(e) => setLongURL(e.target.value)}/>
+				</div>
+				
+				<button type="submit" class="button" disabled={!longURL} onClick={(e) => handleSubmit(e)} >
+					shorten
+				</button>
+			</div>
+
+			{shortURL && (
+				<>
+					<h3 className="result-title">Shorten URL:</h3>
+
+					<div className="result-link-wrapper">
+
+						<a target="_blank" rel="noreferrer" className="shorten-url" href={shortURL} >
+							{shortURL}
+						</a>
+
+						<button onClick={handleCopy} className="copy-button">
+							{copiedText === shortURL ? 'Copied!' : 'Copy'}
+						</button>
+						
+					</div>
+				</>
+			)}
+
+		</div>
+	);
+}
+
+export default App;
