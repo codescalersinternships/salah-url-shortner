@@ -20,6 +20,9 @@ def makeShortURL(request):
         
     s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
     shortURL = ("".join(random.sample(s, 6)))
+    while urlShortener.objects.filter(shortURL=shortURL).exists():
+        shortURL = ("".join(random.sample(s, 6)))
+
     urlShortener.objects.create(longURL=longURL, shortURL=shortURL)
 
     shortURL = "http://localhost:8000/" + shortURL
