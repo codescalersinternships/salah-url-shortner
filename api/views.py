@@ -11,16 +11,17 @@ import random
 @api_view(['POST'])
 def makeShortURL(request):
     data = request.data
-
-    s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890!*^$-_"
-    shortURL = ("".join(random.sample(s, 6)))
-
-    urlShortener.objects.create(
-        longURL = data['longURL'],
-        shortURL = shortURL
-    )
-
     longURL = data['longURL']
+
+    if urlShortener.objects.filter(longURL=longURL).exists():
+        obj = urlShortener.objects.get(longURL=longURL)
+        shortURL = "http://localhost:8000/" + obj.shortURL
+        return Response({'longURL': longURL, 'shortURL': shortURL})
+        
+    s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
+    shortURL = ("".join(random.sample(s, 6)))
+    urlShortener.objects.create(longURL=longURL, shortURL=shortURL)
+
     shortURL = "http://localhost:8000/" + shortURL
 
     return Response({'longURL': longURL, 'shortURL': shortURL})
