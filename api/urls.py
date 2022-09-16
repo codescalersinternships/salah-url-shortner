@@ -3,5 +3,5 @@ from . import views
 
 urlpatterns = [
     path('shorten/', views.makeShortURL),
-    path('<str:shortURL>', views.redirectURL)
+    path('<str:uuid>', views.redirectURL)
 ]

@@ -6,13 +6,13 @@ function App() {
 	const [longURL, setLongURL]             = useState("");
 	// shortURL holds the value of the short URL returned by the server
 	const [shortURL, setShortURL]           = useState("");
-	// copiedText used to toggole the text value of copying button
-	const [copiedText, setCopiedText] 			= useState("");
+	// copiedText used to toggle the text value of copying button
+	const [copiedText, setCopiedText] 		= useState("");
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
 
-		fetch("http://127.0.0.1:8000/shorten/", {
+		fetch("http://" + process.env.REACT_APP_BACKEND_ADDRESS + ":8000/shorten/", {
 			method:   "POST",
 			body:     JSON.stringify({ longURL: longURL }),
 			headers:  { "Content-Type": "application/json" },

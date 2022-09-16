@@ -1,10 +1,13 @@
+from wsgiref.util import request_uri
 from django.shortcuts import redirect
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import urlShortener
 from .serializers import urlShortenerSerializer
 
-import random
+import uuid
+
+address = "http://localhost:8000/"
 
 # Create your views here.
 
@@ -15,23 +18,17 @@ def makeShortURL(request):
 
     if urlShortener.objects.filter(longURL=longURL).exists():
         obj = urlShortener.objects.get(longURL=longURL)
-        shortURL = "http://localhost:8000/" + obj.shortURL
-        return Response({'longURL': longURL, 'shortURL': shortURL})
+        return Response({'longURL': obj.longURL, 'shortURL': obj.shortURL})
         
-    s = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890"
-    shortURL = ("".join(random.sample(s, 6)))
-    while urlShortener.objects.filter(shortURL=shortURL).exists():
-        shortURL = ("".join(random.sample(s, 6)))
-
+    shortURL = address + str(uuid.uuid4())[:6]
     urlShortener.objects.create(longURL=longURL, shortURL=shortURL)
-
-    shortURL = "http://localhost:8000/" + shortURL
 
     return Response({'longURL': longURL, 'shortURL': shortURL})
 
 
 
-def redirectURL(request, shortURL):
+def redirectURL(request, uuid):
+    shortURL = address + uuid
     try:
         obj = urlShortener.objects.get(shortURL=shortURL)
     except urlShortener.DoesNotExist:
