@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: react
+  labels:
+    app: react
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: react
+  template:
+    metadata:
+      labels:
+        app: react
+    spec:
+      containers:
+      - name: react
+        image: ahmedsalahucf/urlshortner-frontend
+        ports:
+        - containerPort: 80
+        env:
+        - name: NODE_ENV
+          value: production
+        - name: REACT_APP_BACKEND_ADDRESS
+          valueFrom: 
+            configMapKeyRef:
+              name: configmap
+              key: backend_address
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: react-service
+spec:
+  selector:
+    app: react
+  type: LoadBalancer  
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+      nodePort: 30000
