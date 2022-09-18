@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: react-configmap
+  namespace: frontend
+data:
+  backend_address: django-service.backend
