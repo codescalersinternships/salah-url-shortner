@@ -17,9 +17,9 @@ spec:
     spec:
       containers:
       - name: react
-        image: ahmedsalahucf/urlshortner-frontend
+        image: ahmedsalahucf/urlshortner-frontend:latest
         ports:
-        - containerPort: 80
+        - containerPort: 800
         env:
         - name: NODE_ENV
           value: production
@@ -40,6 +40,6 @@ spec:
   type: LoadBalancer 
   ports:
     - protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 800
+      targetPort: 800
       nodePort: 30000

@@ -4,14 +4,16 @@ from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from .models import urlShortener
 from .serializers import urlShortenerSerializer
+from django.views.decorators.csrf import csrf_exempt
 
 import uuid
 
-address = "http://localhost:8000/"
+address = "http://0.0.0.0:8000/"
 
 # Create your views here.
 
 @api_view(['POST'])
+@csrf_exempt
 def makeShortURL(request):
     data = request.data
     longURL = data['longURL']
@@ -26,7 +28,7 @@ def makeShortURL(request):
     return Response({'longURL': longURL, 'shortURL': shortURL})
 
 
-
+@csrf_exempt
 def redirectURL(request, uuid):
     shortURL = address + uuid
     try:

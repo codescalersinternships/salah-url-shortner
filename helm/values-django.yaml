@@ -1,0 +1,14 @@
+deploymentName: django-deployment
+namespace: backend
+appLabel: django
+replicas: 1
+containerName: django
+image: ahmedsalahucf/urlshortner-backend
+pullPolicy: Never
+containerPort: 8000
+
+serviceName: django-service
+serviceType: LoadBalancer
+port: 80
+targetPort: 80
+nodePort: 30000

@@ -1,0 +1,14 @@
+deploymentName: react-deployment
+namespace: frontend
+appLabel: react
+replicas: 1
+containerName: react
+image: ahmedsalahucf/urlshortner-frontend
+pullPolicy: Never
+containerPort: 80
+
+serviceName: react-service
+serviceType: LoadBalancer
+port: 8000
+targetPort: 8000
+nodePort: 31000

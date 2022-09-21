@@ -103,3 +103,136 @@
 .result-link-wrapper > .copy-button:hover {
   background-color: #222;
 }
+
+@media only screen and (max-width: 700px) {
+  .content-wrapper {
+    padding: 10px;
+  }
+
+  .page-title {
+    font-size: 30px;
+  }
+
+  .page-description {
+    font-size: 12px;
+    margin: 10px;
+  }
+
+  .form-wrapper {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .form-wrapper > .input-wrapper > input {
+    font-size: 16px;
+    padding: 15px;
+    height: 55px;
+    overflow: hidden;
+    min-width: auto;
+    width: 90%;
+  }
+
+  .form-wrapper > button {
+    font-size: 16px;
+    padding: 0 10px;
+    height: 45px;
+    margin-top: 10px;
+  }
+
+  .result-title {
+    margin: 50px 0 10px;
+    font-size: 18px;
+  }
+
+  .shorten-url {
+    font-size: 17px;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .form-wrapper > .input-wrapper > input {
+    min-width: 400px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  .content-wrapper {
+    padding: 10px;
+  }
+
+  .page-title {
+    font-size: 30px;
+  }
+
+  .page-description {
+    font-size: 12px;
+    margin: 10px;
+  }
+
+  .form-wrapper {
+    margin-top: 20px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+  }
+
+  .form-wrapper > .input-wrapper > input {
+    font-size: 16px;
+    padding: 15px;
+    height: 55px;
+    overflow: hidden;
+    min-width: 300px;
+    width: 100%;
+  }
+
+  .form-wrapper > button {
+    font-size: 16px;
+    padding: 0 10px;
+    height: 45px;
+    margin-top: 10px;
+    margin-left: 0px;
+  }
+
+  .result-title {
+    margin: 50px 0 10px;
+    font-size: 18px;
+  }
+
+  .shorten-url {
+    font-size: 17px;
+    font-weight: bold;
+    text-decoration: underline;
+  }
+
+  .result-link-wrapper {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .result-link-wrapper>.shorten-url {
+    color: #222;
+    font-weight: 700;
+    margin: 0;
+    text-decoration: underline;
+    font-size: 20px;
+  }
+
+  .result-link-wrapper>.copy-button {
+    background-color: #444;
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer;
+    margin-top: 20px;
+    margin-left: 0px;
+    outline: none;
+    padding: 10px 20px;
+  }
+}

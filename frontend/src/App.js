@@ -11,8 +11,7 @@ function App() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-
-		fetch("http://" + process.env.REACT_APP_BACKEND_ADDRESS + ":8000/shorten/", {
+		fetch("http://0.0.0:8000/shorten", {
 			method:   "POST",
 			body:     JSON.stringify({ longURL: longURL }),
 			headers:  { "Content-Type": "application/json" },
@@ -35,10 +34,10 @@ function App() {
 
 			<h1 className="page-title">URL Shortener</h1>
 
-			<p className="page-description">
+			<div className="page-description">
 				Simple URL shortener application built with Django and React.
-			</p>
-
+			</div>
+			
 			<div className="form-wrapper">
 
 				<div className="input-wrapper">

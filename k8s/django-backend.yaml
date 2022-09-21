@@ -15,19 +15,11 @@ spec:
       labels:
         app: django
     spec:
-      volumes:
-      - name: db-pv-storage
-        persistentVolumeClaim:
-          claimName: db-pv-claim
       containers:
       - name: django
         image: ahmedsalahucf/urlshortner-backend
-        imagePullPolicy: IfNotPresent
         ports:
         - containerPort: 8000
-        volumeMounts:
-        - mountPath: "/app/db"
-          name: db-pv-storage
 ---
 apiVersion: v1
 kind: Service
@@ -36,8 +28,10 @@ metadata:
   namespace: backend
 spec:
   selector:
-    app: django.backend
+    app: django
+  type: LoadBalancer 
   ports:
     - protocol: TCP
       port: 8000
       targetPort: 8000
+      nodePort: 32000

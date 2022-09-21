@@ -4,4 +4,4 @@ metadata:
   name: react-configmap
   namespace: frontend
 data:
-  backend_address: django-service.backend
+  backend_address: 192.168.49.2

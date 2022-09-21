@@ -1,0 +1,6 @@
+apiVersion: v2
+name: urlshortner
+description: A Helm chart for urlshortner
+type: application
+version: 0.1.0
+appVersion: 1.0.0
