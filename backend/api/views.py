@@ -1,3 +1,5 @@
+from distutils.log import ERROR
+from sre_constants import SUCCESS
 from urllib.parse import ParseResult, urlparse
 from wsgiref.util import request_uri
 from django.shortcuts import redirect
@@ -9,8 +11,12 @@ from .serializers import urlShortenerSerializer
 from django.views.decorators.csrf import csrf_exempt
 
 import uuid
+import validators
 
 address = "http://162.205.240.238:8000/"
+Success = 'success'
+Error   = 'error'
+InvalidURLErrorMSG = 'URL you entered is invalid URL'
 
 # Create your views here.
 
@@ -21,17 +27,21 @@ def makeShortURL(request):
     url = data['longURL']
 
     p = urlparse(url)
-    longURL = ParseResult('https', p.netloc, p.path, p.params, p.query, p.fragment).geturl()
-    print(longURL)
+    netloc = p.netloc or p.path
+    path = p.path if p.netloc else ''
+    longURL = ParseResult('https', netloc, path, p.params, p.query, p.fragment).geturl()
 
-    if urlShortener.objects.filter(longURL=longURL).exists():
-        obj = urlShortener.objects.get(longURL=longURL)
-        return Response({'longURL': obj.longURL, 'shortURL': obj.shortURL})
-        
-    shortURL = address + str(uuid.uuid4())[:6]
-    urlShortener.objects.create(longURL=longURL, shortURL=shortURL)
+    if validators.url(longURL):
+        if urlShortener.objects.filter(longURL=longURL).exists():
+            obj = urlShortener.objects.get(longURL=longURL)
+            return Response({'longURL': obj.longURL, 'shortURL': obj.shortURL, 'status': Success, 'errorMessage': ''})
+            
+        shortURL = address + str(uuid.uuid4())[:6]
+        urlShortener.objects.create(longURL=longURL, shortURL=shortURL)
 
-    return Response({'longURL': longURL, 'shortURL': shortURL})
+        return Response({'longURL': longURL, 'shortURL': shortURL, 'status': 'success', 'errorMessage': ''})
+    
+    return Response({'longURL': '', 'shortURL': '', 'status': Error, 'errorMessage': InvalidURLErrorMSG})
 
 
 @csrf_exempt

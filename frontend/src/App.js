@@ -8,6 +8,10 @@ function App() {
 	const [shortURL, setShortURL]           = useState("");
 	// copiedText used to toggle the text value of copying button
 	const [copiedText, setCopiedText] 		= useState("");
+	// status holds response status, it can be 'success' or 'error'
+	const [status, setStatus] 	= useState("");
+	// errorMessage holds response error message if response status is 'error'
+	const [errorMessage, setErrorMessage] 	= useState("");
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
@@ -19,7 +23,9 @@ function App() {
 			.then((res)   => res.json())
 			.then((data)  => {
 				setShortURL(data.shortURL);
-				setLongURL("");
+				setLongURL(data.longURL);
+				setStatus(data.status);
+				setErrorMessage(data.errorMessage);
 			});
 	};
 
@@ -49,7 +55,7 @@ function App() {
 				</button>
 			</div>
 
-			{shortURL && (
+			{shortURL && status === "success" && (
 				<>
 					<h3 className="result-title">Shorten URL:</h3>
 
@@ -64,6 +70,18 @@ function App() {
 						</button>
 						
 					</div>
+				</>
+			)}
+			
+			{status === "error" && (
+				<>
+					{errorMessage && (
+						<>
+							<div class="alert">
+								<strong>Error!</strong> {errorMessage}
+							</div>
+						</>
+					)}
 				</>
 			)}
 
