@@ -1,14 +1,16 @@
+from urllib.parse import ParseResult, urlparse
 from wsgiref.util import request_uri
 from django.shortcuts import redirect
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from urllib.parse import urlparse
 from .models import urlShortener
 from .serializers import urlShortenerSerializer
 from django.views.decorators.csrf import csrf_exempt
 
 import uuid
 
-address = "http://0.0.0.0:8000/"
+address = "http://162.205.240.238:8000/"
 
 # Create your views here.
 
@@ -16,7 +18,11 @@ address = "http://0.0.0.0:8000/"
 @csrf_exempt
 def makeShortURL(request):
     data = request.data
-    longURL = data['longURL']
+    url = data['longURL']
+
+    p = urlparse(url)
+    longURL = ParseResult('https', p.netloc, p.path, p.params, p.query, p.fragment).geturl()
+    print(longURL)
 
     if urlShortener.objects.filter(longURL=longURL).exists():
         obj = urlShortener.objects.get(longURL=longURL)

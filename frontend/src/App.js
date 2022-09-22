@@ -11,7 +11,7 @@ function App() {
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		fetch("http://0.0.0:8000/shorten", {
+		fetch("/api", {
 			method:   "POST",
 			body:     JSON.stringify({ longURL: longURL }),
 			headers:  { "Content-Type": "application/json" },
