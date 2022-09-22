@@ -29,11 +29,12 @@ function App() {
 			});
 	};
 
-	const handleCopy = () => {
-    navigator.clipboard.writeText(shortURL).then(() => {
-      setCopiedText(shortURL)
-    })
-  }
+	const handleCopy = (e) => {
+		e.preventDefault();
+		navigator.clipboard.writeText(shortURL).then(() => {
+			setCopiedText(shortURL)
+		})
+  	}
 
 	return (
 		<div className="content-wrapper">
@@ -65,7 +66,7 @@ function App() {
 							{shortURL}
 						</a>
 
-						<button onClick={handleCopy} className="copy-button">
+						<button onClick={(e) => handleCopy(e)} className="copy-button">
 							{copiedText === shortURL ? 'Copied!' : 'Copy'}
 						</button>
 						
